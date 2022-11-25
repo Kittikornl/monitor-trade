@@ -12,8 +12,15 @@ def main():
         positions = res["data"]["otherPositionRetList"]
         out = ["update positions:\n"]
         update_positions = []
+        # check closed positions
+        all_current_positions = set([position["symbol"] for position in positions])
+        all_last_positions = set(sent_positions.keys())
+        closed_positions = all_last_positions - all_current_positions
+        for closed_position in closed_positions:
+            del sent_positions[closed_position]
+            update_positions.append({"pls close this position": closed_position})
         for position in positions:
-            # check update 
+            # check update
             if position["symbol"] not in sent_positions:
                 sent_positions[position["symbol"]] = position["updateTimeStamp"]
                 update_positions.append(position)
