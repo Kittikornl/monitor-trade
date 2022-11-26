@@ -12,6 +12,9 @@ def main():
         positions = res["data"]["otherPositionRetList"]
         out = ["update positions:\n"]
         update_positions = []
+        # check long or short
+        for position in positions:
+            position["symbol"] += "LONG" if position["amount"] > 0 else "SHORT"
         # check closed positions
         all_current_positions = set([position["symbol"] for position in positions])
         all_last_positions = set(sent_positions.keys())
