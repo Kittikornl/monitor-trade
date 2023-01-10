@@ -14,7 +14,11 @@ def main():
         update_positions = []
         # check long or short
         for position in positions:
-            position["symbol"] += "LONG" if position["amount"] > 0 else "SHORT" + f"{leverage}X"
+                position["symbol"] = (
+                    position["symbol"] + "LONG"
+                    if position["amount"] > 0
+                    else "SHORT" + f"{position['leverage']}X"
+                )
         # check closed positions
         all_current_positions = set([position["symbol"] for position in positions])
         all_last_positions = set(sent_positions.keys())
